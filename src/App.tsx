@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import MainLayout from "./components/layout/MainLayout";
 import AdminLayout from "./components/layout/AdminLayout";
 import LoadingSpinner from "./components/ui/LoadingSpinner";
@@ -35,6 +35,7 @@ function App() {
         </Route>
 
         <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Navigate to="/admin/login" replace />} />
           <Route path="login" element={<AdminLoginPage />} />
           <Route path="dashboard" element={<AdminDashboard />} />
         </Route>

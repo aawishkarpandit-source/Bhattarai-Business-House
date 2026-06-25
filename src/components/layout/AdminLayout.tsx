@@ -70,6 +70,14 @@ export default function AdminLayout() {
     }
   }, []);
 
+  const isAdminLogin = location.pathname === '/admin/login';
+
+  if (isAdminLogin) {
+    return (
+      <Outlet />
+    );
+  }
+
   if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center bg-gray-50">
@@ -83,14 +91,6 @@ export default function AdminLayout() {
 
   if (!isAuthenticated) {
     return <Navigate to="/admin/login" replace />;
-  }
-
-  const isAdminLogin = location.pathname === '/admin/login';
-
-  if (isAdminLogin) {
-    return (
-      <Outlet />
-    );
   }
 
   return (
