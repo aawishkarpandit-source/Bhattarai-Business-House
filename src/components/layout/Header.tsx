@@ -52,21 +52,12 @@ export default function Header() {
     <>
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-          isScrolled
-            ? 'bg-white/95 backdrop-blur-md shadow-lg shadow-black/5'
-            : 'bg-transparent'
+          'fixed top-0 left-0 right-0 z-50 bg-white shadow-sm border-b border-gray-100 transition-shadow duration-300',
+          isScrolled && 'shadow-md'
         )}
       >
         {/* Top Bar */}
-        <div
-          className={cn(
-            'hidden lg:block border-b transition-colors duration-300',
-            isScrolled
-              ? 'border-gray-100 bg-primary-900 text-white'
-              : 'border-white/10 bg-primary-950/80 text-white/80'
-          )}
-        >
+        <div className="hidden lg:block border-b border-gray-100 bg-primary-900 text-white">
           <div className="mx-auto max-w-7xl px-6 py-2 flex items-center justify-between text-sm">
             <div className="flex items-center gap-6">
               {TOP_BAR_LINKS.map((link) => (
@@ -92,32 +83,15 @@ export default function Header() {
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group">
               <div className="relative">
-                <div
-                  className={cn(
-                    'flex h-10 w-10 items-center justify-center rounded-lg font-serif text-lg font-bold transition-all duration-300',
-                    isScrolled
-                      ? 'bg-primary-600 text-white shadow-md shadow-primary-600/30'
-                      : 'bg-white/15 text-white backdrop-blur-sm border border-white/20'
-                  )}
-                >
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-600 text-white font-serif text-lg font-bold shadow-md shadow-primary-600/30">
                   BBH
                 </div>
               </div>
               <div className="flex flex-col">
-                <span
-                  className={cn(
-                    'font-serif text-xl font-bold leading-tight tracking-tight transition-colors duration-300',
-                    isScrolled ? 'text-primary-900' : 'text-white'
-                  )}
-                >
+                <span className="font-serif text-xl font-bold leading-tight tracking-tight text-primary-900">
                   Bhattarai Business House
                 </span>
-                <span
-                  className={cn(
-                    'text-[10px] uppercase tracking-[0.2em] font-medium transition-colors duration-300',
-                    isScrolled ? 'text-gray-400' : 'text-white/60'
-                  )}
-                >
+                <span className="text-[10px] uppercase tracking-[0.2em] font-medium text-gray-400">
                   Premium Enterprise
                 </span>
               </div>
@@ -134,12 +108,8 @@ export default function Header() {
                     cn(
                       'relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-lg',
                       isActive
-                        ? isScrolled
-                          ? 'text-primary-600'
-                          : 'text-white'
-                        : isScrolled
-                          ? 'text-gray-600 hover:text-primary-600 hover:bg-primary-50'
-                          : 'text-white/80 hover:text-white hover:bg-white/10'
+                        ? 'text-primary-600'
+                        : 'text-gray-600 hover:text-primary-600 hover:bg-primary-50'
                     )
                   }
                 >
@@ -147,12 +117,7 @@ export default function Header() {
                     <>
                       <span className="relative z-10">{link.label}</span>
                       {isActive && (
-                        <span
-                          className={cn(
-                            'absolute bottom-0 left-2 right-2 h-0.5 rounded-full',
-                            isScrolled ? 'bg-primary-600' : 'bg-white'
-                          )}
-                        />
+                        <span className="absolute bottom-0 left-2 right-2 h-0.5 rounded-full bg-primary-600" />
                       )}
                     </>
                   )}
@@ -164,10 +129,7 @@ export default function Header() {
             <div className="flex items-center gap-3">
               <Link
                 to="/test-drive"
-                className={cn(
-                  'hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200',
-                  'bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-lg shadow-primary-600/25 hover:shadow-xl hover:shadow-primary-600/30'
-                )}
+                className="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-lg shadow-primary-600/25 transition-all duration-200 hover:shadow-xl hover:shadow-primary-600/30"
               >
                 Book Test Drive
               </Link>
@@ -175,12 +137,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className={cn(
-                  'lg:hidden inline-flex items-center justify-center rounded-lg p-2 transition-colors',
-                  isScrolled
-                    ? 'text-gray-700 hover:bg-gray-100'
-                    : 'text-white hover:bg-white/10'
-                )}
+                className="lg:hidden inline-flex items-center justify-center rounded-lg p-2 text-gray-700 hover:bg-gray-100 transition-colors"
                 aria-label="Toggle menu"
               >
                 {isMobileMenuOpen ? (
