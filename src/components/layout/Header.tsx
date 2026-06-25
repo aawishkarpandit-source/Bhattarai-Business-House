@@ -1,15 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone, Mail, ChevronDown } from 'lucide-react';
 import { cn } from '@/utils/cn';
 
 const NAV_LINKS = [
   { label: 'Home', path: '/' },
-  {
-    label: 'Automotive',
-    path: '/automotive',
-  },
+  { label: 'Automotive', path: '/automotive' },
   { label: 'Products & Brands', path: '/products' },
   { label: 'News', path: '/news' },
   { label: 'About', path: '/about' },
@@ -56,7 +52,7 @@ export default function Header() {
     <>
       <header
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
+          'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
           isScrolled
             ? 'bg-white/95 backdrop-blur-md shadow-lg shadow-black/5'
             : 'bg-transparent'
@@ -65,7 +61,7 @@ export default function Header() {
         {/* Top Bar */}
         <div
           className={cn(
-            'hidden lg:block border-b transition-colors duration-500',
+            'hidden lg:block border-b transition-colors duration-300',
             isScrolled
               ? 'border-gray-100 bg-primary-900 text-white'
               : 'border-white/10 bg-primary-950/80 text-white/80'
@@ -136,7 +132,7 @@ export default function Header() {
                   end={link.path === '/'}
                   className={({ isActive }) =>
                     cn(
-                      'relative px-4 py-2 text-sm font-medium transition-colors duration-300 rounded-lg group',
+                      'relative px-4 py-2 text-sm font-medium transition-colors duration-200 rounded-lg',
                       isActive
                         ? isScrolled
                           ? 'text-primary-600'
@@ -151,13 +147,11 @@ export default function Header() {
                     <>
                       <span className="relative z-10">{link.label}</span>
                       {isActive && (
-                        <motion.div
-                          layoutId="activeNavIndicator"
+                        <span
                           className={cn(
                             'absolute bottom-0 left-2 right-2 h-0.5 rounded-full',
                             isScrolled ? 'bg-primary-600' : 'bg-white'
                           )}
-                          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                         />
                       )}
                     </>
@@ -171,8 +165,8 @@ export default function Header() {
               <Link
                 to="/test-drive"
                 className={cn(
-                  'hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-300',
-                  'bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-lg shadow-primary-600/25 hover:shadow-xl hover:shadow-primary-600/30 hover:scale-105 active:scale-95'
+                  'hidden sm:inline-flex items-center gap-2 px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200',
+                  'bg-gradient-to-r from-primary-600 to-primary-700 text-white shadow-lg shadow-primary-600/25 hover:shadow-xl hover:shadow-primary-600/30'
                 )}
               >
                 Book Test Drive
@@ -201,108 +195,96 @@ export default function Header() {
       </header>
 
       {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
-
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed top-0 right-0 z-50 h-full w-80 max-w-[85vw] bg-white shadow-2xl lg:hidden"
-            >
-              <div className="flex flex-col h-full">
-                {/* Drawer Header */}
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-                  <div className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 text-white font-serif text-sm font-bold">
-                      BBH
-                    </div>
-                    <span className="font-serif text-sm font-bold text-primary-900">
-                      Menu
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="rounded-lg p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
-                    aria-label="Close menu"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-
-                {/* Drawer Nav Links */}
-                <nav className="flex-1 overflow-y-auto px-4 py-6">
-                  <ul className="space-y-1">
-                    {NAV_LINKS.map((link, index) => (
-                      <motion.li
-                        key={link.path}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                      >
-                        <NavLink
-                          to={link.path}
-                          end={link.path === '/'}
-                          className={({ isActive }) =>
-                            cn(
-                              'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200',
-                              isActive
-                                ? 'bg-primary-50 text-primary-600 border border-primary-100'
-                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                            )
-                          }
-                        >
-                          {link.label}
-                          {link.path === '/automotive' && (
-                            <ChevronDown className="ml-auto h-4 w-4 rotate-[-90deg]" />
-                          )}
-                        </NavLink>
-                      </motion.li>
-                    ))}
-                  </ul>
-                </nav>
-
-                {/* Drawer Footer */}
-                <div className="border-t border-gray-100 px-6 py-5">
-                  <Link
-                    to="/test-drive"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-700 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-primary-600/25 transition-all hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
-                  >
-                    Book Test Drive
-                  </Link>
-                  <div className="mt-4 space-y-2 text-xs text-gray-400">
-                    <a
-                      href="tel:+97714567890"
-                      className="flex items-center gap-2 hover:text-primary-600 transition-colors"
-                    >
-                      <Phone className="h-3.5 w-3.5" />
-                      +977-1-4567890
-                    </a>
-                    <a
-                      href="mailto:info@bhattaraibusinesshouse.com"
-                      className="flex items-center gap-2 hover:text-primary-600 transition-colors"
-                    >
-                      <Mail className="h-3.5 w-3.5" />
-                      info@bhattaraibusinesshouse.com
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </>
+      <div
+        className={cn(
+          'fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden transition-opacity duration-200',
+          isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         )}
-      </AnimatePresence>
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
+
+      {/* Mobile Drawer */}
+      <div
+        className={cn(
+          'fixed top-0 right-0 z-50 h-full w-80 max-w-[85vw] bg-white shadow-2xl lg:hidden transition-transform duration-300 ease-in-out',
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        )}
+      >
+        <div className="flex flex-col h-full">
+          {/* Drawer Header */}
+          <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
+            <div className="flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-600 text-white font-serif text-sm font-bold">
+                BBH
+              </div>
+              <span className="font-serif text-sm font-bold text-primary-900">
+                Menu
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="rounded-lg p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+              aria-label="Close menu"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          {/* Drawer Nav Links */}
+          <nav className="flex-1 overflow-y-auto px-4 py-6">
+            <ul className="space-y-1">
+              {NAV_LINKS.map((link) => (
+                <li key={link.path}>
+                  <NavLink
+                    to={link.path}
+                    end={link.path === '/'}
+                    className={({ isActive }) =>
+                      cn(
+                        'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200',
+                        isActive
+                          ? 'bg-primary-50 text-primary-600 border border-primary-100'
+                          : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                      )
+                    }
+                  >
+                    {link.label}
+                    {link.path === '/automotive' && (
+                      <ChevronDown className="ml-auto h-4 w-4 rotate-[-90deg]" />
+                    )}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Drawer Footer */}
+          <div className="border-t border-gray-100 px-6 py-5">
+            <Link
+              to="/test-drive"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-primary-600 to-primary-700 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-primary-600/25 transition-all hover:shadow-xl"
+            >
+              Book Test Drive
+            </Link>
+            <div className="mt-4 space-y-2 text-xs text-gray-400">
+              <a
+                href="tel:+97714567890"
+                className="flex items-center gap-2 hover:text-primary-600 transition-colors"
+              >
+                <Phone className="h-3.5 w-3.5" />
+                +977-1-4567890
+              </a>
+              <a
+                href="mailto:info@bhattaraibusinesshouse.com"
+                className="flex items-center gap-2 hover:text-primary-600 transition-colors"
+              >
+                <Mail className="h-3.5 w-3.5" />
+                info@bhattaraibusinesshouse.com
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }
